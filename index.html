@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>SVG Shapes + Dots</title>
+<style>
+:root{color-scheme:dark;--bg:#0b0d0d;--panel:#151816;--line:rgba(255,255,255,.08);--text:#eef1ef;--muted:#8b938f;--accent:#f8f700}
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;background:var(--bg);color:var(--text);font:12px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Arial,sans-serif;overflow:hidden}
+body{display:flex;align-items:center;justify-content:center}
+#app{width:100%;height:100%;display:grid;grid-template-columns:minmax(280px,1fr) 320px;gap:16px;padding:16px}
+#preview{min-width:0;display:grid;place-items:center;position:relative}
+#stage{height:min(calc(100vh - 32px),calc((100vw - 368px) * 16 / 9));aspect-ratio:9/16;max-height:100%;position:relative;overflow:hidden;background:#0f1110;border:1px solid rgba(255,255,255,.06);border-radius:20px;box-shadow:0 28px 90px rgba(0,0,0,.42)}
+#stage svg{display:block;width:100%;height:100%}
+#overlay{position:absolute;left:12px;right:12px;bottom:12px;padding:8px 10px;border-radius:10px;background:rgba(10,12,11,.74);border:1px solid rgba(255,255,255,.08);color:#c9cfcc;font-size:11px;backdrop-filter:blur(12px)}
+#panel{height:min(calc(100vh - 32px),700px);overflow:auto;background:rgba(21,24,22,.96);border:1px solid var(--line);border-radius:16px;box-shadow:0 24px 70px rgba(0,0,0,.32)}
+#head{position:sticky;top:0;background:rgba(21,24,22,.96);backdrop-filter:blur(12px);padding:14px;border-bottom:1px solid var(--line)}
+.titleRow{display:flex;gap:8px;align-items:center}.titleRow strong{font-size:14px;flex:1}.badge{padding:3px 6px;border-radius:6px;background:#242925;color:#c2c8c4;font-size:10px}
+#controls{padding:12px;display:grid;gap:12px}.section{border-bottom:1px solid var(--line);padding-bottom:10px}.row{display:grid;grid-template-columns:minmax(0,1fr) 110px;gap:8px;align-items:center;margin-bottom:8px}.row:last-child{margin-bottom:0}.row label{color:#c8ccca}.row small{display:block;color:#737a76;font-size:10px;margin-top:1px}
+input[type=number]{width:100%;height:30px;border:1px solid rgba(255,255,255,.1);background:#0f1110;border-radius:6px;padding:4px 7px;color:inherit;font-variant-numeric:tabular-nums}
+button{border:1px solid var(--line);background:#242825;border-radius:8px;min-height:34px;padding:7px 9px;cursor:pointer;color:inherit;font:inherit}button:hover{background:#2f3430}button.primary{background:#eeed0a;color:#111;border-color:#eeed0a;font-weight:650}button.primary:hover{background:#f8f700}
+.toolbar{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:10px}.note{color:#818985;font-size:10px;line-height:1.5}.note b{color:#c5cbc7}
+@media(max-width:900px){html,body{overflow:auto}#app{display:block;height:auto;min-height:100%;padding:10px}#preview{height:78vh;margin-bottom:10px}#stage{height:min(78vh,calc(100vw * 16 / 9 - 20px))}#panel{height:auto;max-height:none}}
+</style>
+</head>
+<body>
+<div id="app">
+  <section id="preview">
+    <div id="stage">
+      <svg id="originalSvg" viewBox="0 0 2160 3840" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0;display:none">
+        <g clip-path="url(#clip0_orig)">
+          <rect width="2160" height="3840" fill="#141514"/>
+          <g filter="url(#filter0_orig)"><path d="M1016.02 1334.99C2121.74 1334.99 2083.51 412.489 2083.51 412.489C2083.51 412.489 2257.74 750.489 2257.74 1143.49C2257.74 1942.49 1952.23 2052.49 1277.5 2052.49C602.773 2052.49 352.057 1334.99 1016.02 1334.99Z" fill="#2D302F"/></g>
+          <g filter="url(#filter1_orig)"><path d="M742.299 826.489C742.299 531.489 926.799 48.4888 1672.8 48.4888C493.299 48.4888 251.799 538.489 251.799 826.489C251.799 1384.49 742.299 1387.99 742.299 826.489Z" fill="#2D302F"/></g>
+          <g filter="url(#filter2_orig)"><path d="M800.097 2765.47C1008.69 2556.87 1480.69 2345.8 2008.19 2873.3C1174.16 2039.27 656.908 2214.99 453.262 2418.63C58.696 2813.2 403.057 3162.51 800.097 2765.47Z" fill="#2D302F"/></g>
+          <g id="dotsOriginal" transform="translate(0 2328)"></g>
+        </g>
+        <defs>
+          <filter id="filter0_orig" x="226.786" y="12.4888" width="2430.95" height="2440" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feFlood flood-opacity="0"/><feBlend in="SourceGraphic"/><feGaussianBlur stdDeviation="200"/></filter>
+          <filter id="filter1_orig" x="-148.201" y="-351.511" width="2221" height="1997.81" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feFlood flood-opacity="0"/><feBlend in="SourceGraphic"/><feGaussianBlur stdDeviation="200"/></filter>
+          <filter id="filter2_orig" x="-121.104" y="1849.48" width="2529.29" height="1490.96" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feFlood flood-opacity="0"/><feBlend in="SourceGraphic"/><feGaussianBlur stdDeviation="200"/></filter>
+          <clipPath id="clip0_orig"><rect width="2160" height="3840" fill="white"/></clipPath>
+        </defs>
+      </svg>
+
+      <svg id="animatedSvg" viewBox="0 0 2160 3840" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0">
+        <g clip-path="url(#clip0_anim)">
+          <rect id="bgRect" width="2160" height="3840" fill="#141514"/>
+          <g id="shapeA" filter="url(#filter0_anim)"><path id="pathA" d="M1016.02 1334.99C2121.74 1334.99 2083.51 412.489 2083.51 412.489C2083.51 412.489 2257.74 750.489 2257.74 1143.49C2257.74 1942.49 1952.23 2052.49 1277.5 2052.49C602.773 2052.49 352.057 1334.99 1016.02 1334.99Z" fill="#2D302F"/></g>
+          <g id="shapeB" filter="url(#filter1_anim)"><path id="pathB" d="M742.299 826.489C742.299 531.489 926.799 48.4888 1672.8 48.4888C493.299 48.4888 251.799 538.489 251.799 826.489C251.799 1384.49 742.299 1387.99 742.299 826.489Z" fill="#2D302F"/></g>
+          <g id="shapeC" filter="url(#filter2_anim)"><path id="pathC" d="M800.097 2765.47C1008.69 2556.87 1480.69 2345.8 2008.19 2873.3C1174.16 2039.27 656.908 2214.99 453.262 2418.63C58.696 2813.2 403.057 3162.51 800.097 2765.47Z" fill="#2D302F"/></g>
+          <g id="dotsAnimated" transform="translate(0 2328)"></g>
+          <rect id="ditherRect" width="2160" height="3840" fill="#808080" opacity="0.035" filter="url(#ditherFilter)" style="mix-blend-mode:soft-light"/>
+        </g>
+        <defs>
+          <filter id="filter0_anim" x="226.786" y="12.4888" width="2430.95" height="2440" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feFlood flood-opacity="0"/><feBlend in="SourceGraphic"/><feGaussianBlur stdDeviation="200"/></filter>
+          <filter id="filter1_anim" x="-148.201" y="-351.511" width="2221" height="1997.81" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feFlood flood-opacity="0"/><feBlend in="SourceGraphic"/><feGaussianBlur stdDeviation="200"/></filter>
+          <filter id="filter2_anim" x="-121.104" y="1849.48" width="2529.29" height="1490.96" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feFlood flood-opacity="0"/><feBlend in="SourceGraphic"/><feGaussianBlur stdDeviation="200"/></filter>
+          <filter id="ditherFilter" x="0" y="0" width="2160" height="3840" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+            <feTurbulence type="fractalNoise" baseFrequency="0.24" numOctaves="1" seed="8" stitchTiles="stitch" result="noise"/>
+            <feColorMatrix in="noise" type="matrix" values="0.333 0.333 0.333 0 0  0.333 0.333 0.333 0 0  0.333 0.333 0.333 0 0  0 0 0 1 0"/>
+          </filter>
+          <clipPath id="clip0_anim"><rect width="2160" height="3840" fill="white"/></clipPath>
+        </defs>
+      </svg>
+      <div id="overlay">O — оригинал · Space — пауза · TD Speed теперь реально меняет скорость Evolution: 0.01 почти замораживает turbulence, 1.0 = базовая скорость</div>
+    </div>
+  </section>
+
+  <aside id="panel">
+    <div id="head">
+      <div class="titleRow"><strong>SVG Shapes + Dots</strong><span class="badge" id="fps">-- FPS</span></div>
+      <div class="toolbar">
+        <button class="primary" id="toggleOriginal">Оригинал (O): выкл</button>
+        <button id="togglePause">Пауза</button>
+      </div>
+    </div>
+    <div id="controls">
+      <div class="section">
+        <div class="row"><label>Скорость<small>Меняет длительность цикла. Луп всегда бесшовный.</small></label><input id="speed" type="number" step="any" value="2" /></div>
+        <div class="row"><label>Масштаб искажения<small>Главная крутилка для больших шейпов.</small></label><input id="scale" type="number" step="any" value="2" /></div>
+        <div class="row"><label>Dither<small>Мелкий статичный grain, который ломает полосы бендинга.</small></label><input id="dither" type="number" step="any" value="10" /></div>
+        <div class="row"><label>Яркость<small>Меняет реальные цвета SVG, без CSS brightness().</small></label><input id="brightness" type="number" step="any" value="1" /></div>
+        <div class="row"><label>Dots Opacity<small>1.0 = исходная прозрачность из присланного SVG.</small></label><input id="dotsOpacity" type="number" step="any" value="0.2" /></div>
+        <div class="row"><label>TD Amount<small>Сила искажения для слоя точек — аналог Amount в Turbulent Displace.</small></label><input id="dotsMotion" type="number" step="any" value="20" /></div>
+        <div class="row"><label>TD Size<small>Размер турбулентных пятен. Больше значение — крупнее области деформации.</small></label><input id="dotsLens" type="number" step="any" value="6" /></div>
+      <div class="row"><label>TD Stretch<small>Насколько точки локально набухают и слегка тянутся, не теряя шаг сетки.</small></label><input id="dotsStretch" type="number" step="any" value="4" /></div>
+        <div class="row"><label>TD Speed<small>Скорость эволюции Turbulent Displacement на точках. Луп остаётся бесшовным.</small></label><input id="tdSpeed" type="number" step="any" value="0.25" /></div>
+      </div>
+      <div class="note"><b>Что изменил:</b> исправил <b>TD Speed</b>: в прошлой версии он почти не влиял на реальную скорость Evolution, а лишь менял форму замкнутой траектории noise. Теперь это прямой множитель времени turbulence: <b>0 = стоп</b>, <b>0.01 = почти заморожено</b>, <b>1 = базовая скорость</b>, <b>2 = вдвое быстрее</b>. Защита краёв сохранена. Фон и точки остаются периодическими; при дробном TD Speed общий полный цикл становится длиннее, потому что у turbulence свой период.</div>
+    </div>
+  </aside>
+</div>
+<script>
+(() => {
+  const $ = s => document.querySelector(s);
+  const originalSvg = $('#originalSvg');
+  const animatedSvg = $('#animatedSvg');
+  const shapeA = $('#shapeA');
+  const shapeB = $('#shapeB');
+  const shapeC = $('#shapeC');
+  const pathA = $('#pathA');
+  const pathB = $('#pathB');
+  const pathC = $('#pathC');
+  const bgRect = $('#bgRect');
+  const ditherRect = $('#ditherRect');
+  const dotsOriginal = $('#dotsOriginal');
+  const dotsAnimated = $('#dotsAnimated');
+  const fpsEl = $('#fps');
+
+  const BASE_BG = [0x14,0x15,0x14];
+  const BASE_SHAPE = [0x2D,0x30,0x2F];
+  const BASE_LOOP = 12.0;
+  const DOTS_Y_OFFSET = 2328;
+  const DOTS_W = 2160;
+  const DOTS_H = 1512;
+  const DOT_STEP = 48;
+  const DOT_RADIUS = 9;
+  const DOT_COLS = 45;
+  const DOT_ROWS_COUNT = 32;
+
+  const params = { speed:2.0, scale:2.0, dither:10.0, brightness:1.0, dotsOpacity:0.2, dotsMotion:20.0, dotsLens:6.0, dotsStretch:4.0, tdSpeed:0.25, paused:false, showOriginal:false };
+
+  const NS = 'http://www.w3.org/2000/svg';
+  const dotsRowsAnimated = [];
+  const dotsRowsOriginal = [];
+  const dotsNodes = [];
+
+  function buildDots(root, animated){
+    root.textContent = '';
+    if (animated) { dotsRowsAnimated.length = 0; dotsNodes.length = 0; }
+    else { dotsRowsOriginal.length = 0; }
+
+    for(let r=0;r<DOT_ROWS_COUNT;r++){
+      const y = 10 + r*DOT_STEP;
+      const maskT = clamp(y / DOTS_H, 0, 1);
+      const row = document.createElementNS(NS,'g');
+      row.setAttribute('fill', '#FFFFFF');
+      row.setAttribute('opacity', String(0.15 * maskT * params.dotsOpacity));
+      root.appendChild(row);
+      if (animated) dotsRowsAnimated.push(row); else dotsRowsOriginal.push(row);
+
+      for(let c=0;c<DOT_COLS;c++){
+        const cx = 24 + c*DOT_STEP;
+        const circle = document.createElementNS(NS,'circle');
+        circle.setAttribute('cx', String(cx));
+        circle.setAttribute('cy', String(y));
+        circle.setAttribute('r', String(DOT_RADIUS));
+        row.appendChild(circle);
+        if (animated) dotsNodes.push({ el: circle, cx, cy: y, row: r, col: c, nx: cx / DOTS_W, ny: y / DOTS_H, depth: r / (DOT_ROWS_COUNT - 1), maskT });
+      }
+    }
+  }
+
+  function toHex(rgb){
+    return '#' + rgb.map(v => Math.max(0,Math.min(255,Math.round(v))).toString(16).padStart(2,'0')).join('').toUpperCase();
+  }
+  function scaledColor(base, factor){ return toHex(base.map(v => v * Math.max(0, factor))); }
+  function clamp(v, min, max){ return Math.max(min, Math.min(max, v)); }
+
+  function edgeFade(globalX, globalY, margin = 180){
+    const dist = Math.min(globalX, 2160 - globalX, globalY, 3840 - globalY);
+    return smoothstep01(clamp(dist / margin, 0, 1));
+  }
+
+  function updateColors(){
+    const bg = scaledColor(BASE_BG, params.brightness);
+    const sh = scaledColor(BASE_SHAPE, params.brightness);
+    bgRect.setAttribute('fill', bg);
+    pathA.setAttribute('fill', sh); pathB.setAttribute('fill', sh); pathC.setAttribute('fill', sh);
+    ditherRect.setAttribute('opacity', String(Math.max(0, params.dither) * 0.035));
+    dotsRowsAnimated.forEach((row, i) => {
+      const y = 10 + i*DOT_STEP;
+      const maskT = clamp(y / DOTS_H, 0, 1);
+      row.setAttribute('opacity', String(0.15 * maskT * params.dotsOpacity));
+    });
+    dotsRowsOriginal.forEach((row, i) => {
+      const y = 10 + i*DOT_STEP;
+      const maskT = clamp(y / DOTS_H, 0, 1);
+      row.setAttribute('opacity', String(0.15 * maskT * params.dotsOpacity));
+    });
+  }
+
+  ['speed','scale','dither','brightness','dotsOpacity','dotsMotion','dotsLens','dotsStretch','tdSpeed'].forEach(k => {
+    const el = $('#'+k);
+    el.addEventListener('input', () => {
+      const v = Number(el.value);
+      if (Number.isFinite(v)) { params[k] = v; updateColors(); }
+    });
+  });
+
+  function syncButtons(){
+    $('#toggleOriginal').textContent = `Оригинал (O): ${params.showOriginal ? 'вкл' : 'выкл'}`;
+    $('#togglePause').textContent = params.paused ? 'Продолжить' : 'Пауза';
+    originalSvg.style.display = params.showOriginal ? 'block' : 'none';
+    animatedSvg.style.display = params.showOriginal ? 'none' : 'block';
+  }
+  $('#toggleOriginal').onclick = () => { params.showOriginal = !params.showOriginal; syncButtons(); };
+  $('#togglePause').onclick = () => { params.paused = !params.paused; syncButtons(); };
+  window.addEventListener('keydown', e => {
+    if (e.key === 'o' || e.key === 'O') { params.showOriginal = !params.showOriginal; syncButtons(); }
+    if (e.code === 'Space') { e.preventDefault(); params.paused = !params.paused; syncButtons(); }
+  });
+
+  const centers = {};
+  function captureCenters(){
+    for (const [key, node] of [['A',shapeA],['B',shapeB],['C',shapeC]]){
+      const b = node.getBBox(); centers[key] = [b.x + b.width/2, b.y + b.height/2];
+    }
+  }
+  function setTransform(node, center, dx, dy, sx, sy, rot){
+    const [cx,cy] = center;
+    node.setAttribute('transform', `translate(${(cx+dx).toFixed(3)} ${(cy+dy).toFixed(3)}) rotate(${rot.toFixed(4)}) scale(${sx.toFixed(6)} ${sy.toFixed(6)}) translate(${-cx.toFixed(3)} ${-cy.toFixed(3)})`);
+  }
+
+  function lensInfluence(x, y, cx, cy, sigma){
+    const dx = x - cx;
+    const dy = y - cy;
+    const d2 = dx*dx + dy*dy;
+    const inf = Math.exp(-d2 / (2 * sigma * sigma));
+    const d = Math.sqrt(d2) || 0.0001;
+    return { inf, nx: dx / d, ny: dy / d };
+  }
+
+  function fract(x){ return x - Math.floor(x); }
+
+  function hash2(x, y){
+    return fract(Math.sin(x * 127.1 + y * 311.7) * 43758.5453123);
+  }
+
+  function smoothstep01(t){ return t * t * (3 - 2 * t); }
+
+  function valueNoise(x, y){
+    const ix = Math.floor(x), iy = Math.floor(y);
+    const fx = x - ix, fy = y - iy;
+    const ux = smoothstep01(fx), uy = smoothstep01(fy);
+    const a = hash2(ix, iy);
+    const b = hash2(ix + 1, iy);
+    const c = hash2(ix, iy + 1);
+    const d = hash2(ix + 1, iy + 1);
+    const ab = a + (b - a) * ux;
+    const cd = c + (d - c) * ux;
+    return (ab + (cd - ab) * uy) * 2 - 1;
+  }
+
+  function fbm(x, y, octaves = 3){
+    let sum = 0, amp = 0.5, freq = 1.0, norm = 0;
+    for(let i=0;i<octaves;i++){
+      sum += valueNoise(x * freq, y * freq) * amp;
+      norm += amp;
+      freq *= 2.0;
+      amp *= 0.5;
+    }
+    return sum / norm;
+  }
+
+  function turbulentSample(nx, ny, phase, sizeCtrl){
+    const size = Math.max(0.15, sizeCtrl);
+    const baseFreq = 0.65 / size;
+    const loopR = 0.42;
+    const ox = Math.cos(phase) * loopR;
+    const oy = Math.sin(phase) * loopR;
+    const x = nx * baseFreq * 7.0;
+    const y = ny * baseFreq * 7.0;
+    const n1 = fbm(x + ox, y + oy, 3);
+    const n2 = fbm(x + 13.7 + ox * 0.8, y + 9.2 + oy * 0.8, 3);
+    const n3 = fbm(x - 6.5 + ox * 1.15, y + 4.1 + oy * 1.15, 3);
+    return { nx: n1, ny: n2, ns: n3 };
+  }
+
+  function turbulentGradient(nx, ny, phase, sizeCtrl){
+    const eps = 0.006;
+    const a = turbulentSample(nx - eps, ny, phase, sizeCtrl).ns;
+    const b = turbulentSample(nx + eps, ny, phase, sizeCtrl).ns;
+    const c = turbulentSample(nx, ny - eps, phase, sizeCtrl).ns;
+    const d = turbulentSample(nx, ny + eps, phase, sizeCtrl).ns;
+    return { gx: (b - a) / (eps * 2), gy: (d - c) / (eps * 2) };
+  }
+
+
+  let elapsed = 0, last = performance.now(), fpsFrames = 0, fpsLast = performance.now();
+  function animate(now){
+    const dt = Math.min(0.05, (now-last)/1000); last = now;
+    if (!params.paused) elapsed += dt;
+    const duration = BASE_LOOP / Math.max(0.0001, params.speed);
+    const t = ((elapsed % duration) / duration) * Math.PI * 2.0;
+    const s = params.scale;
+
+    setTransform(shapeA, centers.A,
+      Math.sin(t) * 34*s,
+      Math.cos(t*2.0) * 26*s,
+      1 + Math.sin(t*2.0+0.4)*0.020*s,
+      1 + Math.cos(t+1.1)*0.028*s,
+      Math.sin(t+0.2)*0.55*s
+    );
+
+    setTransform(shapeB, centers.B,
+      Math.cos(t+0.8) * 26*s,
+      Math.sin(t*2.0+1.3) * 20*s,
+      1 + Math.sin(t+1.7)*0.024*s,
+      1 + Math.cos(t*2.0+0.3)*0.018*s,
+      Math.cos(t+1.0)*0.42*s
+    );
+
+    setTransform(shapeC, centers.C,
+      Math.sin(t+2.2) * 28*s,
+      Math.cos(t*2.0+2.7) * 22*s,
+      1 + Math.cos(t+2.4)*0.018*s,
+      1 + Math.sin(t*2.0+1.0)*0.026*s,
+      Math.sin(t+2.3)*0.50*s
+    );
+
+    const tdAmount = params.dotsMotion;
+    const tdSize = params.dotsLens;
+    const tdStretch = params.dotsStretch;
+    const tdSpeed = Math.max(0, params.tdSpeed);
+
+    // Real TD evolution speed. At 1.0 one turbulence revolution takes one background loop.
+    // At 0.01 it takes 100 background loops; at 0 it is completely static.
+    const tdPhase = tdSpeed === 0 ? 0 : ((elapsed / duration) * Math.PI * 2.0 * tdSpeed);
+
+    for (const dot of dotsNodes){
+      const { el, cx, cy, nx, ny, depth } = dot;
+
+      const samp = turbulentSample(nx, ny, tdPhase, tdSize);
+      const grad = turbulentGradient(nx, ny, tdPhase, tdSize);
+
+      // AE-like turbulent displacement: looped fractal field.
+      const amount = tdAmount * (0.22 + 0.78 * depth);
+      const globalY = DOTS_Y_OFFSET + cy;
+      const fade = edgeFade(cx, globalY, 180);
+      const dx = samp.nx * 10.0 * amount * fade;
+      const dy = samp.ny * 13.0 * amount * fade;
+
+      // local bulge / stretch without any per-dot rotation.
+      // Near the frame borders the effect smoothly fades out to keep edge dots stable.
+      const bulge = 1 + Math.abs(samp.ns) * 0.20 * tdStretch * fade;
+      const stretchX = 1 + clamp(Math.abs(grad.gx) * 0.030 * tdStretch * fade, 0, 0.22);
+      const stretchY = 1 + clamp(Math.abs(grad.gy) * 0.030 * tdStretch * fade, 0, 0.22);
+      const sx = clamp(bulge * stretchX, 0.84, 1.65);
+      const sy = clamp(bulge * stretchY, 0.84, 1.65);
+
+      el.setAttribute('transform', `translate(${dx.toFixed(3)} ${dy.toFixed(3)}) translate(${cx.toFixed(3)} ${cy.toFixed(3)}) scale(${sx.toFixed(4)} ${sy.toFixed(4)}) translate(${-cx.toFixed(3)} ${-cy.toFixed(3)})`);
+    }
+
+    fpsFrames++;
+    if (now-fpsLast>500){ fpsEl.textContent = `${(fpsFrames*1000/(now-fpsLast)).toFixed(0)} FPS`; fpsFrames=0; fpsLast=now; }
+    requestAnimationFrame(animate);
+  }
+
+  buildDots(dotsOriginal, false);
+  buildDots(dotsAnimated, true);
+  updateColors();
+  syncButtons();
+  requestAnimationFrame(() => { captureCenters(); requestAnimationFrame(animate); });
+})();
+</script>
+</body>
+</html>

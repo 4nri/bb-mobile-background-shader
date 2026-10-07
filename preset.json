@@ -1,0 +1,32 @@
+{
+  "designSize": [2160, 3840],
+  "masterLoopSeconds": 24.0,
+  "background": {
+    "baseColor": "#141514",
+    "shapeColor": "#2D302F",
+    "speed": 2.0,
+    "distortionScale": 2.0,
+    "brightness": 1.0,
+    "dither": 10.0,
+    "shapePivotsPx": {
+      "R": [1442.2636, 1232.4895],
+      "G": [962.2995, 647.3960],
+      "B": [1143.5431, 2594.9563]
+    }
+  },
+  "dots": {
+    "regionY": 2328,
+    "regionHeight": 1512,
+    "columns": 45,
+    "rows": 32,
+    "spacingPx": 48,
+    "radiusPx": 9,
+    "baseOpacity": 0.15,
+    "opacityControl": 0.2,
+    "tdAmount": 20.0,
+    "tdSize": 6.0,
+    "tdStretch": 4.0,
+    "tdSpeed": 0.25,
+    "edgeFadePx": 180
+  }
+}

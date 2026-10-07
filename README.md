@@ -5,10 +5,10 @@
 ```bash
 git clone https://github.com/4nri/bb-mobile-background-shader.git
 cd bb-mobile-background-shader
-python3 scripts/decode_mask.py
+open index.html
 ```
 
-После этого `assets/background_masks_rgb_135x240.png` будет восстановлен из base64-файла. `index.html` — визуальный эталон, его можно открыть локально в браузере.
+`index.html` — визуальный эталон. Готовая RGB mask texture уже лежит в `assets/background_masks_rgb_135x240.png`, ничего декодировать не нужно.
 
 Текстура 135×240 намеренно небольшая: фоновые маски очень низкочастотные и сильно размытые. Если понадобится более крупная версия, её можно пересобрать из `background_source.svg` по той же RGB-упаковке каналов.
 
